@@ -1,3 +1,3 @@
 <template>
-    <h1>elo</h1>
+    <h1>home</h1>
 </template>
