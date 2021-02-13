@@ -15,8 +15,12 @@
 </template>
 
 <style lang="scss">
+ 
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap');
+  
 #app {
-  font-family: Tahoma;
+  font-family: 'Lato' imp !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
@@ -58,6 +62,7 @@ nav {
             color: #333333;
             padding: 15px 20px;
             text-decoration: none;
+            font-family: 'Lato';
 
             .triangle {
                 display: inline-block;

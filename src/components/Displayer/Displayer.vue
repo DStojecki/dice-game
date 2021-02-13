@@ -1,20 +1,28 @@
 <template>
     <div class="wrapper">
-    <div class="displayer">
-        <img v-if="!isGameStarted" :src="'/img/' + randomNumber + '.png'" alt="">
-        <img class="rotate" v-else-if="loading" src="/img/loading.png" alt="">
-        <img v-else :src="'/img/' + rolledNumber + '.png'" alt="">
-    </div>
-        
-        
+        <div class="stats"></div>
 
-    <button @click="getDiceroll">Start</button>
-    <button @click="stopGame">Quit</button>
+        <div class="game-panel">
+            <div class="displayer">
+                <img v-if="!isGameStarted" :src="'/img/' + randomNumber + '.png'" alt="">
+                <img class="rotate" v-else-if="loading" src="/img/loading.png" alt="">
+                <img v-else :src="'/img/' + rolledNumber + '.png'" alt="">
+
+                
+            </div>
+            <button v-if="!isGameStarted" @click="getDiceroll">Start</button>
+            <GamePanel v-if="isGameStarted">
+                <button v-if="isGameStarted" @click="getDiceroll">Roll</button>
+                <button @click="stopGame">Quit</button>
+            </GamePanel>
+        </div>
+
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import GamePanel from '../GamePanel/GamePanel'
 
 export default {
     data() {
@@ -23,6 +31,10 @@ export default {
             loading: true,
             randomNumber: null,
         }
+    },
+
+    components: {
+        GamePanel
     },
 
     computed: {
@@ -40,6 +52,10 @@ export default {
 
     methods: {
         getDiceroll() {
+            if(this.isGameStarted === false) {
+                return this.isGameStarted = true;
+            }
+
             this.isGameStarted = true;
             this.loading = true;
 
@@ -48,7 +64,7 @@ export default {
 
                 this.$store.commit("changeRolledNumber", response.data.dice[0].value)
                 this.loading = false;
-            })}, 1000)
+            })}, 1500)
         },
 
         stopGame() {
@@ -60,6 +76,7 @@ export default {
 </script>
 <style lang="scss" scoped>
     .wrapper {
+        display: flex;
         max-width: 1100px;
         height: 700px;
         margin: 100px auto;
@@ -83,23 +100,53 @@ export default {
                 filter: blur(20px);
                 margin: -20px;
             }
-        
-        .displayer {
-            height: 168px;
-            width: 168px;
-            padding: 20px;
-            margin: 0 auto;
-            background-color: #fff;
-            border-radius: 4px;
-            img {
-                width: 100%;
-                height: 100%;
-            }
 
-            .rotate {
-                animation: rotate 0.8s infinite;
+            .stats {
+                width: 35%;
+                background-color:rgba(255,255,255,0.6);
             }
-        }
+            .game-panel {
+                width: 65%;
+
+                .displayer {
+                    height: 168px;
+                    width: 168px;
+                    padding: 20px;
+                    margin: 70px auto;
+                    background-color: #fff;
+                    border-radius: 4px;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .rotate {
+                        animation: rotate 0.8s infinite;
+                    }
+                }
+
+                button {
+                    width: 168px;
+                    background: linear-gradient(to right bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+                    border:none;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    font-family: 'Lato';
+                    display: inline-block;
+                    text-align: center;
+                    margin: 0 auto;
+                    display: block;
+                    transition: 0.2s;
+                    cursor: pointer;
+                    font-size: 22px;
+                    font-size: 100;
+
+                        &:hover {
+                        box-shadow: 0px 0px 26px 6px rgba(255,255,255,1);
+                }
+                }
+            }
     }   
     
 
