@@ -20,10 +20,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&display=swap');
   
 #app {
-  font-family: 'Lato' imp !important;
+  font-family: 'Lato' !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #fff;
 }
 
 * {

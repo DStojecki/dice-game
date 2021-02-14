@@ -3,17 +3,18 @@
         <div class="stats"></div>
 
         <div class="game-panel">
+
             <div class="displayer">
                 <img v-if="!isGameStarted" :src="'/img/' + randomNumber + '.png'" alt="">
                 <img class="rotate" v-else-if="loading" src="/img/loading.png" alt="">
                 <img v-else :src="'/img/' + rolledNumber + '.png'" alt="">
-
-                
             </div>
+
             <button v-if="!isGameStarted" @click="getDiceroll">Start</button>
+
             <GamePanel v-if="isGameStarted">
                 <button v-if="isGameStarted" @click="getDiceroll">Roll</button>
-                <button @click="stopGame">Quit</button>
+                <div class="quit" @click="stopGame">x</div>
             </GamePanel>
         </div>
 
@@ -53,6 +54,9 @@ export default {
     methods: {
         getDiceroll() {
             if(this.isGameStarted === false) {
+                this.loading = false;
+                this.$store.commit("changeRolledNumber", Math.floor(Math.random() * (6 - 1) + 1))
+                
                 return this.isGameStarted = true;
             }
 
@@ -106,6 +110,7 @@ export default {
                 background-color:rgba(255,255,255,0.6);
             }
             .game-panel {
+                position: relative;
                 width: 65%;
 
                 .displayer {
