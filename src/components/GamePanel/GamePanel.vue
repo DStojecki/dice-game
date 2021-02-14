@@ -28,7 +28,6 @@ export default {
             isHigher: false,
             isLower: false,
             isSame: false,
-            
         }
     },
 
