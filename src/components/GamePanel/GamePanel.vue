@@ -18,6 +18,7 @@
             <button class="bet" value="500" @click="setBet($event)">500</button>
             <button class="bet" value="1000" @click="setBet($event)">1000</button>
         </div>
+
     </div>
 </template>
 
@@ -25,26 +26,43 @@
 export default {
     data() {
         return {
-            isHigher: false,
-            isLower: false,
-            isSame: false,
+        }
+    },
+
+    props: ["clear"],
+
+    computed: {
+
+        bets() {
+            return [...document.querySelectorAll(".bet")]
+        },
+
+        statementButtons() {
+            return [...document.querySelectorAll(".statement")]
+        }
+    },
+
+    watch: {
+        clear() {
+            this.bets.forEach(bet => bet.classList.remove("active"));
+            this.statementButtons.forEach( btn => btn.classList.remove("active"));
+            this.$emit("cleared")
         }
     },
 
     methods: {
 
         setBet(e) {
-            const bets = [...document.querySelectorAll(".bet")];
-
-            bets.forEach(bet => bet.classList.remove("active"))
+            this.bets.forEach(bet => bet.classList.remove("active"))
             e.target.classList.add("active")
 
+            this.$store.commit("changePlayerBet", e.target.value)
+
+            this.checkIfcanRoll()
         },
 
         setStatement(e) {
-            const statementButtons = [...document.querySelectorAll(".statement")];
-
-            statementButtons.forEach(btn => btn.classList.remove("active"));
+            this.statementButtons.forEach( btn => btn.classList.remove("active"));
             e.target.classList.add("active")
 
             if(e.target.value === "=") {
@@ -55,8 +73,15 @@ export default {
             }
 
             this.$store.commit("changePlayerStatement", e.target.value)
-        },
 
+            this.checkIfcanRoll()
+        },
+    
+        checkIfcanRoll() {
+            if(this.bets.some( el => el.classList.contains("active")) && this.statementButtons.some( el => el.classList.contains("active"))) {
+                this.$store.commit("changeCanRoll", true)
+            }
+        },
     }
 }
 </script>

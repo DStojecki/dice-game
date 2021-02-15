@@ -12,12 +12,12 @@
 
             <button v-if="!isGameStarted" @click="getDiceroll">Start</button>
 
-            <GamePanel v-if="isGameStarted">
-                <button v-if="isGameStarted" @click="getDiceroll">Roll</button>
+            <GamePanel v-if="isGameStarted" :clear="clear" @cleared="cleared">
+                <button v-if="canRoll" @click="roll">Roll</button>
+                <button v-else>Roll</button>
                 <div class="quit" @click="stopGame">x</div>
             </GamePanel>
         </div>
-
     </div>
 </template>
 
@@ -31,6 +31,7 @@ export default {
             isGameStarted: false,
             loading: true,
             randomNumber: null,
+            clear: false,
         }
     },
 
@@ -40,6 +41,7 @@ export default {
 
     computed: {
             ...mapState(["rolledNumber"]),
+            ...mapState(["canRoll"])
             
     },    
 
@@ -75,6 +77,17 @@ export default {
             this.isGameStarted = false
             this.loading = true
         },
+
+        roll() {
+            this.clear = true,
+            this.getDiceroll()
+
+            this.$store.commit("changeCanRoll", false)
+        },
+
+        cleared() {
+            this.clear = false
+        }
     }
 }
 </script>

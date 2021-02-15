@@ -10,6 +10,7 @@ export default new Vuex.Store({
       priceMultiplier: 2,
       playerStatement: "",
       playerBet: 0,
+      canRoll: false,
   },
 
   mutations: {
@@ -27,6 +28,10 @@ export default new Vuex.Store({
 
       changePlayerBet(state, payload) {
           state.playerBet = payload
+      },
+
+      changeCanRoll(state, payload) {
+          state.canRoll = payload
       }
   },
   actions: {
