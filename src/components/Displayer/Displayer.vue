@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <div class="stats"></div>
+        <Stats class="stats" />
 
         <div class="game-panel">
 
@@ -24,6 +24,7 @@
 <script>
 import { mapState } from 'vuex'
 import GamePanel from '../GamePanel/GamePanel'
+import Stats from '../Stats/Stats'
 
 export default {
     data() {
@@ -36,7 +37,8 @@ export default {
     },
 
     components: {
-        GamePanel
+        GamePanel,
+        Stats,
     },
 
     computed: {
