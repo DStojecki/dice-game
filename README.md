@@ -1,5 +1,7 @@
 # dice-game
-
+ 
+# work in progress
+ 
 ## Project setup
 ```
 npm install
