@@ -94,7 +94,7 @@ export default {
             
             if(this.playerStatement === "higher") {
                 if(this.rolledNumber > this.previousNumber) {
-                    const result = this.playerBet * this.priceMultiplier
+                    const result = this.playerBet 
                     this.$store.commit("addResult", result)
 
                 }else {
@@ -112,14 +112,14 @@ export default {
                     this.$store.commit("addResult", result)
                 }
             }
-            
             if(this.playerStatement === "same") {
-                if(this.rolledNumber = this.previousNumber) {
+                if(this.rolledNumber === this.previousNumber) {
                     const result = this.playerBet * this.priceMultiplier
                     this.$store.commit("addResult", result)
+                    
 
                 }else {
-                    const result = this.playerBet * -1
+                    const result = -this.playerBet
                     this.$store.commit("addResult", result)
                 }
             }
