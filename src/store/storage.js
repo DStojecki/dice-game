@@ -7,13 +7,19 @@ export default new Vuex.Store({
     
   state: {
       rolledNumber: 0,
+      previousNumber: null,
       priceMultiplier: 2,
       playerStatement: "",
       playerBet: 0,
       canRoll: false,
+      money: 500, 
   },
 
   mutations: {
+      changePreviousNumber(state, payload) {
+          state.previousNumber = payload
+      }, 
+    
       changeRolledNumber(state, payload) {
           state.rolledNumber = payload
       },
@@ -32,6 +38,10 @@ export default new Vuex.Store({
 
       changeCanRoll(state, payload) {
           state.canRoll = payload
+      },
+
+      addResult(state, payload) {
+          state.money = state.money + parseInt(payload)
       }
   },
   actions: {

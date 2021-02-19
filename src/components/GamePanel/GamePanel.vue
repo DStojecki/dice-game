@@ -4,9 +4,9 @@
         <h1>
             Next roll will be ...
         </h1>
-        <button class="statement" value=">" @click="setStatement($event)">Higher</button>
-        <button class="statement" value="=" @click="setStatement($event)">Same</button>
-        <button class="statement" value="<" @click="setStatement($event)">Lower</button>
+        <button class="statement" value="higher" @click="setStatement($event)">Higher</button>
+        <button class="statement" value="same" @click="setStatement($event)">Same</button>
+        <button class="statement" value="lower" @click="setStatement($event)">Lower</button>
         
 
         <h1>
@@ -14,9 +14,9 @@
         </h1>
 
         <div class="bets">
-            <button class="bet" value="200" @click="setBet($event)">200</button>
-            <button class="bet" value="500" @click="setBet($event)">500</button>
-            <button class="bet" value="1000" @click="setBet($event)">1000</button>
+            <button class="bet" value=200 @click="setBet($event)">200</button>
+            <button class="bet" value=500 @click="setBet($event)">500</button>
+            <button class="bet" value=1000 @click="setBet($event)">1000</button>
         </div>
 
     </div>
@@ -55,7 +55,7 @@ export default {
         setBet(e) {
             this.bets.forEach(bet => bet.classList.remove("active"))
             e.target.classList.add("active")
-
+            
             this.$store.commit("changePlayerBet", e.target.value)
 
             this.checkIfcanRoll()
@@ -117,7 +117,7 @@ export default {
             .quit {
                     cursor: pointer;
                     background-color: white;
-                    color: black;
+                    color: black; 
                     font-size: 30px;
                     position: absolute;
                     top: 5%;

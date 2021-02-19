@@ -42,9 +42,7 @@ export default {
     },
 
     computed: {
-            ...mapState(["rolledNumber"]),
-            ...mapState(["canRoll"])
-            
+        ...mapState(["rolledNumber", "canRoll", "playerStatement", "priceMultiplier", "previousNumber", "playerBet"]),
     },    
 
     created() {
@@ -60,9 +58,9 @@ export default {
             if(this.isGameStarted === false) {
                 this.loading = false;
                 this.$store.commit("changeRolledNumber", Math.floor(Math.random() * (6 - 1) + 1))
-                
                 return this.isGameStarted = true;
             }
+
 
             this.isGameStarted = true;
             this.loading = true;
@@ -71,6 +69,9 @@ export default {
                 this.axios.get("http://roll.diceapi.com/json/d6").then((response) => {
 
                 this.$store.commit("changeRolledNumber", response.data.dice[0].value)
+
+                this.checkResult()
+
                 this.loading = false;
             })}, 1500)
         },
@@ -82,9 +83,46 @@ export default {
 
         roll() {
             this.clear = true,
+            this.$store.commit("changePreviousNumber", this.rolledNumber)
+
             this.getDiceroll()
 
             this.$store.commit("changeCanRoll", false)
+        },
+
+        checkResult() {
+            
+            if(this.playerStatement === "higher") {
+                if(this.rolledNumber > this.previousNumber) {
+                    const result = this.playerBet * this.priceMultiplier
+                    this.$store.commit("addResult", result)
+
+                }else {
+                    const result = -this.playerBet
+                    this.$store.commit("addResult", result)
+                }
+            }
+            if(this.playerStatement === "lower") {
+                if(this.rolledNumber < this.previousNumber) {
+                    const result = this.playerBet 
+                    this.$store.commit("addResult", result)
+
+                }else {
+                    const result = -this.playerBet
+                    this.$store.commit("addResult", result)
+                }
+            }
+            
+            if(this.playerStatement === "same") {
+                if(this.rolledNumber = this.previousNumber) {
+                    const result = this.playerBet * this.priceMultiplier
+                    this.$store.commit("addResult", result)
+
+                }else {
+                    const result = this.playerBet * -1
+                    this.$store.commit("addResult", result)
+                }
+            }
         },
 
         cleared() {
