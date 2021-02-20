@@ -33,6 +33,7 @@ export default {
             loading: true,
             randomNumber: null,
             clear: false,
+            result: null,
         }
     },
 
@@ -42,7 +43,7 @@ export default {
     },
 
     computed: {
-        ...mapState(["rolledNumber", "canRoll", "playerStatement", "priceMultiplier", "previousNumber", "playerBet"]),
+        ...mapState(["rolledNumber", "canRoll", "playerStatement", "priceMultiplier", "previousNumber", "playerBet", "money"]),
     },    
 
     created() {
@@ -52,12 +53,20 @@ export default {
         
     },
 
+    watch: {
+        money() {
+            if(this.money <= 0) {
+                this.stopGame()
+            }
+        }
+    },
 
     methods: {
         getDiceroll() {
             if(this.isGameStarted === false) {
                 this.loading = false;
                 this.$store.commit("changeRolledNumber", Math.floor(Math.random() * (6 - 1) + 1))
+                // this.$store.commit("setMoney", 500)
                 return this.isGameStarted = true;
             }
 
@@ -79,6 +88,9 @@ export default {
         stopGame() {
             this.isGameStarted = false
             this.loading = true
+            this.$store.commit("setMoney", 500)
+
+            this.$store.commit("")
         },
 
         roll() {
@@ -91,38 +103,50 @@ export default {
         },
 
         checkResult() {
-            
-            if(this.playerStatement === "higher") {
-                if(this.rolledNumber > this.previousNumber) {
-                    const result = this.playerBet 
-                    this.$store.commit("addResult", result)
 
-                }else {
-                    const result = -this.playerBet
-                    this.$store.commit("addResult", result)
-                }
+            if(this.playerStatement === "higher" && this.rolledNumber > this.previousNumber || 
+               this.playerStatement === "lower" && this.rolledNumber < this.previousNumber || 
+               this.playerStatement === "same" && this.rolledNumber === this.previousNumber) {  
+                
+                this.result = parseInt(this.playerBet) * this.priceMultiplier
+               }
+            else {
+                this.result = parseInt(-this.playerBet)
             }
-            if(this.playerStatement === "lower") {
-                if(this.rolledNumber < this.previousNumber) {
-                    const result = this.playerBet 
-                    this.$store.commit("addResult", result)
 
-                }else {
-                    const result = -this.playerBet
-                    this.$store.commit("addResult", result)
-                }
-            }
-            if(this.playerStatement === "same") {
-                if(this.rolledNumber === this.previousNumber) {
-                    const result = this.playerBet * this.priceMultiplier
-                    this.$store.commit("addResult", result)
+            this.$store.commit("addResult", this.result)
+
+            // if(this.playerStatement === "higher") {
+            //     if(this.rolledNumber > this.previousNumber) {
+            //         const result = this.playerBet * this.priceMultiplier
+            //         this.$store.commit("addResult", result)
+
+            //     }else {
+            //         const result = -this.playerBet
+            //         this.$store.commit("addResult", result)
+            //     }
+            // }
+            // if(this.playerStatement === "lower") {
+            //     if(this.rolledNumber < this.previousNumber) {
+            //         const result = this.playerBet * this.priceMultiplier
+            //         this.$store.commit("addResult", result)
+
+            //     }else {
+            //         const result = -this.playerBet
+            //         this.$store.commit("addResult", result)
+            //     }
+            // }
+            // if(this.playerStatement === "same") {
+            //     if(this.rolledNumber === this.previousNumber) {
+            //         const result = this.playerBet * this.priceMultiplier
+            //         this.$store.commit("addResult", result)
                     
 
-                }else {
-                    const result = -this.playerBet
-                    this.$store.commit("addResult", result)
-                }
-            }
+            //     }else {
+            //         const result = -this.playerBet
+            //         this.$store.commit("addResult", result)
+            //     }
+            // }
         },
 
         cleared() {

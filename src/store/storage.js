@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
       rolledNumber: 0,
       previousNumber: null,
-      priceMultiplier: 2,
+      priceMultiplier: 0,
       playerStatement: "",
       playerBet: 0,
       canRoll: false,
@@ -41,9 +41,13 @@ export default new Vuex.Store({
       },
 
       addResult(state, payload) {
-          state.money = state.money + parseInt(payload)
+          state.money = state.money + payload
+      },
+      
+      setMoney(state, payload) {
+          state.money = payload
       }
-  },
+  }, 
   actions: {
   },
   modules: {

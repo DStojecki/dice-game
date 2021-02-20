@@ -14,9 +14,9 @@
         </h1>
 
         <div class="bets">
-            <button class="bet" value=200 @click="setBet($event)">200</button>
-            <button class="bet" value=500 @click="setBet($event)">500</button>
-            <button class="bet" value=1000 @click="setBet($event)">1000</button>
+            <button class="bet" :value="this.betValues.lowest" @click="setBet($event)">{{ this.betValues.lowest }}</button>
+            <button class="bet" :value="this.betValues.medium" @click="setBet($event)">{{ this.betValues.medium }}</button>
+            <button class="bet" :value="this.betValues.highest" @click="setBet($event)">{{ this.betValues.highest }}</button>
         </div>
 
     </div>
@@ -26,6 +26,7 @@
 export default {
     data() {
         return {
+            betValues: {}
         }
     },
 
@@ -39,7 +40,21 @@ export default {
 
         statementButtons() {
             return [...document.querySelectorAll(".statement")]
+        },
+
+        money() {
+            return this.$store.state.money
         }
+
+        
+    },
+
+    created() {
+        this.betValues = {
+                lowest: parseInt(this.money * 0.2),
+                medium: parseInt(this.money * 0.5),
+                highest: parseInt(this.money * 1),
+            }
     },
 
     watch: {
@@ -47,6 +62,14 @@ export default {
             this.bets.forEach(bet => bet.classList.remove("active"));
             this.statementButtons.forEach( btn => btn.classList.remove("active"));
             this.$emit("cleared")
+        },
+
+        money() {   
+            this.betValues = {
+                lowest: parseInt(this.money * 0.1),
+                medium: parseInt(this.money * 0.6),
+                highest: parseInt(this.money * 1),
+            }
         }
     },
 
@@ -65,11 +88,11 @@ export default {
             this.statementButtons.forEach( btn => btn.classList.remove("active"));
             e.target.classList.add("active")
 
-            if(e.target.value === "=") {
+            if(e.target.value === "same") {
                 this.$store.commit("changePriceMultiplier", 4)
             }
             else {
-                this.$store.commit("changePriceMultiplier", 2)
+                this.$store.commit("changePriceMultiplier", 0.5)
             }
 
             this.$store.commit("changePlayerStatement", e.target.value)
@@ -82,6 +105,14 @@ export default {
                 this.$store.commit("changeCanRoll", true)
             }
         },
+
+        // calcBetValues() {
+        //     this.betValues = {
+        //         lowest: parseInt(this.money * 0.1),
+        //         medium: parseInt(this.money * 0.3),
+        //         highest: parseInt(this.money * 0.6),
+        //     }
+        // }
     }
 }
 </script>
