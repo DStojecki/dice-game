@@ -8,7 +8,6 @@
         <button class="statement" value="same" @click="setStatement($event)">Same</button>
         <button class="statement" value="lower" @click="setStatement($event)">Lower</button>
         
-
         <h1>
             Place your bet 
         </h1>
@@ -45,8 +44,6 @@ export default {
         money() {
             return this.$store.state.money
         }
-
-        
     },
 
     created() {
@@ -74,7 +71,6 @@ export default {
     },
 
     methods: {
-
         setBet(e) {
             this.bets.forEach(bet => bet.classList.remove("active"))
             e.target.classList.add("active")
@@ -105,14 +101,6 @@ export default {
                 this.$store.commit("changeCanRoll", true)
             }
         },
-
-        // calcBetValues() {
-        //     this.betValues = {
-        //         lowest: parseInt(this.money * 0.1),
-        //         medium: parseInt(this.money * 0.3),
-        //         highest: parseInt(this.money * 0.6),
-        //     }
-        // }
     }
 }
 </script>

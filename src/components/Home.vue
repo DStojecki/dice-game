@@ -1,3 +1,10 @@
 <template>
-    <h1>home</h1>
+    <div class="elo">eeeloeleoelo</div>
 </template>
+
+
+
+<style scoped>
+    
+
+</style>

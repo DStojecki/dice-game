@@ -1,5 +1,5 @@
 <template>
-    <h1>Stan konta: <span>{{ this.money }}</span></h1>
+    <h1>Account balance: <span>{{ this.money }}</span></h1>
 </template>
 
 <script>
@@ -7,11 +7,6 @@
 import { mapState } from 'vuex'
 
 export default {
-    data() {
-        return {
-            
-        }
-    },
 
     computed: {
         ...mapState(["money"])
@@ -23,6 +18,6 @@ export default {
 <style lang="scss" scoped>
     h1 {
         padding: 30px;
-        color: #333;
+        color: #444;
     }
 </style>

@@ -12,7 +12,9 @@ export default new Vuex.Store({
       playerStatement: "",
       playerBet: 0,
       canRoll: false,
-      money: 500, 
+      money: 0, 
+      canCreateHistory: false,
+      gameHistory: []
   },
 
   mutations: {
@@ -41,12 +43,27 @@ export default new Vuex.Store({
       },
 
       addResult(state, payload) {
-          state.money = state.money + payload
+          state.money = parseInt(state.money + payload)
       },
       
       setMoney(state, payload) {
           state.money = payload
+      },
+      
+      addGameHistoryRecord(state, payload) {
+          state.gameHistory.push(payload)
+      },
+
+      clearHistory(state) {
+          state.gameHistory = []
+      },
+
+      setCanCreateHistory(state, payload) {
+        state.canCreateHistory = payload
       }
+
+       
+
   }, 
   actions: {
   },
