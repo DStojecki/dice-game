@@ -1,5 +1,5 @@
 <template>
-    <h1>Account balance: <span>{{ this.money }}</span></h1>
+    <h1>Money: <span>{{ this.money }}</span></h1>
 </template>
 
 <script>

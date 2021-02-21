@@ -38,9 +38,6 @@ export default {
         overflow-y: scroll;
 
             .label {
-                width: 90%;
-                margin: 0 auto;
-                color: #333333;
                 font-size: 16px;
                 display: flex;
                 justify-content: space-between;
