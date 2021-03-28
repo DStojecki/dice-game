@@ -1,6 +1,8 @@
 # dice-game
  
 # work in progress
+Need to add RWD.
+
  
 ## Project setup
 ```
